@@ -12,3 +12,12 @@ RSpec::Matchers.define :be_on_sign_in_page do |message|
     page.should have_selector('h1',     text: 'Sign in')
   end
 end
+
+def sign_in(user)
+  visit signin_path
+  fill_in "Email",    with: user.email
+  fill_in "Password", with: user.password
+  click_button "Sign in"
+  # Sign in when not using Capybara.
+  cookies[:remember_token] = user.remember_token
+end
